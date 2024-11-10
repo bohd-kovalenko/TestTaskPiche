@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
+    id("jacoco")
 }
 
 group = "ex.piche"
@@ -12,6 +13,11 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
 
 sourceSets {
     create("integrationTest") {
@@ -78,4 +84,21 @@ tasks.check {
 
 tasks.named("integrationTest") {
     shouldRunAfter("test")
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+
+    reports {
+        html.required.set(true)
+        html.outputLocation.set(layout.buildDirectory.dir("reports"))
+
+        xml.required.set(false)
+
+        csv.required.set(false)
+    }
+}
+
+tasks.build {
+    dependsOn(tasks.jacocoTestReport)
 }

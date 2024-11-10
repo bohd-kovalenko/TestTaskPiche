@@ -33,9 +33,6 @@ configurations {
     val integrationTestImplementation by getting {
         extendsFrom(configurations["testImplementation"])
     }
-    val integrationTestRuntimeOnly by getting {
-        extendsFrom(configurations["testRuntimeOnly"])
-    }
 }
 
 repositories {
@@ -50,14 +47,14 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     compileOnly("org.projectlombok:lombok")
-    runtimeOnly("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
+
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.testcontainers:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
     "integrationTestImplementation"("org.springframework.boot:spring-boot-testcontainers")
-    "integrationTestRuntimeOnly"("org.testcontainers:postgresql")
+    "integrationTestImplementation"("org.testcontainers:postgresql")
 }
 
 tasks.withType<Test> {
@@ -74,4 +71,8 @@ tasks.register<Test>("integrationTest") {
 
 tasks.check {
     dependsOn(tasks.named("integrationTest"))
+}
+
+tasks.named("integrationTest") {
+    shouldRunAfter("test")
 }

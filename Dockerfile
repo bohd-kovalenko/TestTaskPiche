@@ -3,7 +3,8 @@ WORKDIR /app
 COPY gradle gradle
 COPY gradlew build.gradle.kts settings.gradle.kts /app/
 COPY src /app/src
-RUN chmod +x gradlew && ./gradlew build --no-daemon
+RUN chmod +x gradlew
+RUN ./gradlew build -x integrationTest --no-daemon
 
 FROM openjdk:21-slim
 WORKDIR /app

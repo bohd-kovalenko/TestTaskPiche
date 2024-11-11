@@ -4,11 +4,9 @@
 This project is a REST API that simulates a bancing application that supports essential banking operations such as creating accounts, making deposits and withdrawals, and transferring funds between accounts.
 
 ## Technologies
-Built using Java 21, Spring (Web (with virtual threads enabled), Data).
-PostgreSQL was used as a data storage solution.
-Tested using JUnit 5, Mockito and Testcontainers for integration tests.
-Connected with Prometheus for metrics gathering for future exposing using Grafana.
-Flyway is used as a db migrations tool.
+Built using Java 21 and Spring (Web with virtual threads enabled for better concurrency, and Spring Data JPA). Gradle was used as the build and packaging tool. 
+PostgreSQL was used as the primary data storage solution. The application was tested using JUnit 5, Mockito, and Testcontainers for comprehensive integration tests. 
+Metrics are gathered with Prometheus, enabling future visualization with Grafana for detailed performance monitoring. Flyway was used for managing database migrations.
 
 ## Features (Each represented with REST endpoint)
 ### 1. Account Management
@@ -34,3 +32,6 @@ Each transaction is splitted on to a debit and credit and stored in db for conve
 ## Data reviewing
 1. Swagger UI is available under http://localhost:8080/api/swagger-ui/index.html#/
 2. Prometheus UI is available under http://localhost:9090/
+3. Test coverage is available after build of project under the path /build/reports/index.html . Project build may be performed from CLI by running from the root project folder the command 
+```bash
+./gradlew build
